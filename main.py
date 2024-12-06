@@ -1,3 +1,7 @@
+import BST
+import History
+import Queue
+
 def main_menu():
   print("WELCOME TO STREAMTREE")
   print("\nMenu:")
