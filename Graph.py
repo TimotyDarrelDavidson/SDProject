@@ -1,64 +1,84 @@
-class VideoRecommendationGraph:
-    def __init__(self, videos):
-        # Initialize the class with a list of videos.
-        # Each video is represented by a dictionary containing 'title' and 'tags' (set of strings).
-        self.videos = videos
-        self.recommendation_graph = {}
+class Video:
 
-    def findWeight(self, tags1, tags2):
-        """Calculate Jaccard similarity between two sets of tags."""
-        intersection = len(tags1 & tags2)
-        union = len(tags1 | tags2)
-        return intersection / union if union != 0 else 0
+    def __init__(self,title,tags,description,duration):
+        self.title = title
+        self.tags = tags
+        self.description = description
+        self.duration = duration
+        self.left = None
+        self.right = None
+        
 
-    def buildGraph(self):
-        """Build the recommendation graph based on video tag similarities."""
-        for i in range(len(self.videos)):
-            video1 = self.videos[i]
-            self.recommendation_graph[video1['title']] = {}
-            for j in range(len(self.videos)):
-                if i != j:
-                    video2 = self.videos[j]
-                    # Calculate the weight (similarity) between the videos
-                    weight = self.findWeight(video1['tags'], video2['tags'])
-                    self.recommendation_graph[video1['title']][video2['title']] = weight
+class Recommend:
+    def __init__(self, Video):
+        self.title = Video.title
+        self.tags = Video.tags
+        self.right = None
 
-    def getRecommendations(self, video_title):
-        """Return the recommendations for a given video title."""
-        if video_title in self.recommendation_graph:
-            return self.recommendation_graph[video_title]
-        else:
-            return None
+class Recommendation:
+    def __init__(self):
+        self.head = None
+    
+    def addVideo(self,Video):
+        
+        if self.head is None:
+            self.head = Video
+            return
+        
+        temp = self.head
+        while temp:
+            if set(temp.tags) & set(Video.tags):
+                node = Recommend(Video)
+                if temp.right:
+                    self.addEdge(temp.right,node)
+                else:
+                    temp.right = node
+            temp = temp.left
+        
+        temp = self.head
+        while temp.left:
+            temp = temp.left
+            
+        temp.left = Video
+            
+                
+    def addEdge(self, Recommend, newRecommend):
+        temp = Recommend
+        while temp.right:
+            temp = temp.right
+        
+        temp.right = newRecommend
+        
+    def getAllEdge(self,Recommend):
+        temp = Recommend
+        s = " -> "
+        while temp:
+            s += temp.title + " -> "
+            temp = temp.right
+        
+        return s + "None"
+        
+    def __str__(self):
+        temp = self.head
+        s = ""
+        
+        while temp:
+            s += temp.title + self.getAllEdge(temp.right) + "\n"
+            temp = temp.left
+        
+        return s
+        
+        
+video1 = Video("Action Movie 1", ["action", "adventure"], "An exciting action movie", 120)
+video2 = Video("Action Movie 2", ["action", "adventure"], "Another thrilling action movie", 125)
+video3 = Video("Comedy Movie 1", ["comedy", "family"], "A funny family movie", 100)
+video4 = Video("Thriller Movie 1", ["thriller", "action"], "A suspenseful action thriller", 110)
 
-    def displayRecommendations(self):
-        """Display all recommendations in a readable format."""
-        for video_title, similar_videos in self.recommendation_graph.items():
-            print(f"Recommendations for {video_title}:")
-            for other_video, weight in similar_videos.items():
-                print(f"  - {other_video} with weight: {weight:.2f}")
-            print()
+# Create the recommendation system
+rec_sys = Recommendation()
+rec_sys.addVideo(video1)
+rec_sys.addVideo(video2)
+rec_sys.addVideo(video3)
+rec_sys.addVideo(video4)
 
-# # Step 1: Define the Video Data (title and tags)
-# videos = [
-#     {'title': 'Video 1', 'tags': {'python', 'tutorial', 'programming'}},
-#     {'title': 'Video 2', 'tags': {'python', 'tutorial', 'data science'}},
-#     {'title': 'Video 3', 'tags': {'javascript', 'programming', 'web development'}},
-#     {'title': 'Video 4', 'tags': {'python', 'tutorial', 'machine learning'}}
-# ]
-
-# # Step 2: Create the VideoRecommendationGraph object
-# graph = VideoRecommendationGraph(videos)
-
-# # Step 3: Build the recommendation graph based on video similarities
-# graph.buildGraph()
-
-# # Step 4: Display all recommendations
-# graph.displayRecommendations()
-
-# # Step 5: Get recommendations for a specific video (optional)
-# video_title = 'Video 1'
-# recommendations = graph.getRecommendations(video_title)
-# if recommendations:
-#     print(f"\nRecommendations for {video_title}:")
-#     for other_video, weight in recommendations.items():
-#         print(f"  - {other_video} with weight: {weight:.2f}")
+print(rec_sys)
