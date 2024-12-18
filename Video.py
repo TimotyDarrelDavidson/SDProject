@@ -5,6 +5,6 @@ class Video:
         self.tags = tags
         self.description = description
         self.duration = duration
-        self.left = None
-        self.right = None
-        
+    
+    def __str__(self):
+        return f"Title: {self.title}, Tags: {self.tags[:]} \nDescription: {self.description}\n Duration: {self.duration}"
