@@ -7,4 +7,4 @@ class Video:
         self.duration = duration
     
     def __str__(self):
-        return f"Title: {self.title}, Tags: {self.tags[:]} \nDescription: {self.description}\n Duration: {self.duration}"
+        return f"Title: {self.title}, Tags: {self.tags[:]} \nDescription: {self.description} \nDuration: {self.duration}\n\n"

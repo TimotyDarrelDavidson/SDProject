@@ -36,8 +36,11 @@ def main_menu():
   recommendation.addVideo(video3)
   recommendation.addVideo(video4)
   
+  videos.removeVideo(video2.title)
+  recommendation.removeVideo(video2)
+  
 
-  videos.printAllTree()
+  print(videos)
   print(recommendation)
 
   while(True):
@@ -55,7 +58,7 @@ def main_menu():
         videos.insert(video)
         recommendation.addVideo(video)
         
-        videos.printAllTree()
+        print(videos)
         print(recommendation)
         
       elif choice == 2:
