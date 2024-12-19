@@ -7,15 +7,17 @@ from Graph import Recommendation
 def main_menu():
   print("WELCOME TO STREAMTREE")
   print("\nMenu:")
-  print("1. Add video")
-  print("2. Remove video")
-  print("3. Find recommended")
-  print("4. Add video ke Queue")
-  print("5. Remove video dari Queue")
-  print("6. Display Recommendation for current Video")
-  print("7. Display All Video")
-  print("6. Exit")
+  print("1. Add video")               #nambah video ke videos(BST) dan recommendation(Graph) 
+  print("2. Remove video")            #remove video dari videos(BST) dan recommendation(Graph) 
+  print("3. Play Video")              #search from videos(BST) dan save ke current_video 
+  print("4. Find recommended")        #From current_video display recommended
+  print("5. Add video ke Queue")      #nambah video dalam queue
+  print("6. Remove video dari Queue") #bisa remove video apapun dari queue
+  print("7. Display All Video")       #diplay semua video dalam videos(BST)
+  print("0. Exit")
   print()
+  
+  current_video = None;         '''<-----  CURRENT VIDEO'''
   
   videos = BST()
   recommendation = Recommendation()
@@ -64,7 +66,7 @@ def main_menu():
         print("Fungsi Add video ke Queue.")
       elif choice == 5:
         print("Fungsi Remove video dari Queue.")
-      elif choice == 6:
+      elif choice == 0:
         print("Terima kasih sudah menggunakan StreamTree. Sampai jumpa!")
         return False
       else:
