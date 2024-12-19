@@ -27,12 +27,13 @@ class Recommendation:
         temp = self.head
         
         def link_nodes(src: Recommend, dest: Recommend):
-            if set(src.tags) & set(dest.tags):  # Check for common tags
+            if set(src.tags) & set(dest.tags):
                 if src.right:
                     self.addEdge(src, dest)
                 else:
                     src.right = Edge(dest)
                 self.addEdge(dest, src)
+
         
         while temp.left:
             link_nodes(temp,node)
@@ -40,8 +41,49 @@ class Recommendation:
         
         link_nodes(node,temp)
         temp.left = node
-            
+        
+    def removeVideo(self, video: Video):
+        if self.head is None:
+            return
+
+        temp = self.head
+        prev = None
+
+        while temp:
+            if temp.title == video.title:
+                if prev:
+                    prev.left = temp.left
+                else:
+                    self.head = temp.left
                 
+            if set(temp.tags) & set(video.tags):
+                if temp.right:
+                    self.removeEdge(temp, video)
+
+            prev = temp
+            temp = temp.left
+
+    def removeEdge(self, src: Recommend, dest: Recommend):
+        # Remove an edge between `src` and `dest`
+        if src.right is None:
+            return  # No edges to remove
+
+        prev = None
+        current = src.right
+
+        while current:
+            if current.title == dest.title:
+                # Unlink the edge
+                if prev:
+                    prev.right = current.right
+                else:
+                    src.right = current.right
+                return
+
+            prev = current
+            current = current.right
+    
+    
     def addEdge(self, Recommend: Recommend, newRecommend: Recommend):
         if(Recommend.right is None):
             Recommend.right = Edge(newRecommend)
@@ -71,18 +113,3 @@ class Recommendation:
             temp = temp.left
         
         return s
-        
-        
-# video1 = Video("Action Movie 1", ["action", "adventure"], "An exciting action movie", 120)
-# video2 = Video("Action Movie 2", ["action", "adventure"], "Another thrilling action movie", 125)
-# video3 = Video("Comedy Movie 1", ["comedy", "family"], "A funny family movie", 100)
-# video4 = Video("Thriller Movie 1", ["thriller", "action"], "A suspenseful action thriller", 110)
-
-# # Create the recommendation system
-# rec_sys = Recommendation()
-# rec_sys.addVideo(video1)
-# rec_sys.addVideo(video2)
-# rec_sys.addVideo(video3)
-# rec_sys.addVideo(video4)
-
-# print(rec_sys)
