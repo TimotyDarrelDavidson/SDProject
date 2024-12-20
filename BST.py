@@ -83,21 +83,14 @@ class BST:
           
       return node
     
-    return del_node(self.root, title)
-    
-
-    
-    
-    
-    
-    
+    return del_node(self.root, title)    
     
   def search(self, title):
     def DFS(current, title):
       if current is None:
         return None
-      if current.title == title:
-        return current
+      if current.video.title == title:
+        return current.video
       elif title < current.title:
         return DFS(current.left, title)
       else:
@@ -115,11 +108,3 @@ class BST:
           return left_str + current_str + right_str
 
       return DFS(self.root)
-    
-  
-# if __name__ == "__main__":
-#     tree = BST()
-#     tree.insert("Video1", ["tag1","tag2","tag3"], "desc1", 60 * 3)
-#     tree.insert("Video2", ["tag1","tag2","tag3"], "desc1", 60 * 3)
-    
-#     tree.printAllTree()

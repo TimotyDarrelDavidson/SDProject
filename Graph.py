@@ -94,8 +94,26 @@ class Recommendation:
             temp = temp.right
         
         temp.right = Edge(newRecommend)
+            
                 
-    def getAllEdge(self,Recommend: Edge):
+    def getRecommendations(self, video: Video):
+        temp = self.head
+        while temp:
+            if (temp.title != video.title):
+                temp = temp.left
+            else:
+                break
+            
+        temp = temp.right
+        s = ""
+        while temp:
+            s += temp.title + " -> "
+            temp = temp.right
+        
+        return s + "None"
+                
+    
+    def printAllEdge(self,Recommend: Edge):
         temp = Recommend
         s = " -> "
         while temp:
@@ -109,7 +127,7 @@ class Recommendation:
         s = ""
         
         while temp:
-            s += temp.title + self.getAllEdge(temp.right) + "\n"
+            s += temp.title + self.printAllEdge(temp.right) + "\n"
             temp = temp.left
         
         return s
