@@ -36,6 +36,9 @@ class Recommendation:
 
         
         while temp.left:
+            if (temp.title == video.title):
+                print('Video title used')
+                return
             link_nodes(temp,node)
             temp = temp.left
         

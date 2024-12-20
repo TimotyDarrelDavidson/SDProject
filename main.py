@@ -39,10 +39,13 @@ def main_menu():
         print("5. Find recommended")            #From current_video display recommended
         print("6. Add video ke Queue")          #nambah video dalam queue
         print("7. Remove video dari Queue")     #bisa remove video apapun dari queue
-        print("8. Display All Video")           #diplay semua video dalam videos(BST)
+        print("8. Display Queue")           #diplay semua video dalam queue
+        print("9. Display All Video")           #diplay semua video dalam videos(BST)
         print("0. Exit")
         print()
-        print(f"\nNow playing: {current_video.title}")
+        if(current_video):
+            print(f"\nNow playing: {current_video.title}")
+        
         
         try:
             choice = int(input("Pilih menu (Enter the number): "))
@@ -66,23 +69,29 @@ def main_menu():
             elif choice == 2:
                 print("\n -- Fungsi Remove video dari StreamTree. --")
                 title = input("Enter the title of the video to remove: ")
-                videos.removeVideo(title)
-                recommendation.removeVideo(title)
-
-                print(f"\n{title} removed successfully!")
-                print(videos)
+                video = videos.search(title)
+                if(video):    
+                    videos.removeVideo(title)
+                    recommendation.removeVideo(video)
+                    if(current_video.title == title):
+                        current_video = None
+                    queue.delete(title,True)
+                    
+                    print(f"\n{title} removed successfully!")
+                    print(videos)
+                    
+                else:
+                    print(f"\n{title} not found in database")
 
             elif choice == 3:
                 print("\n -- Fungsi Play Video. --")
                 title = input("Enter the title of the video to play: ")
                 current_video = videos.search(title)
-                if current_video:
-                    print(f"\nNow playing: {current_video.title}")
-                else:
+                if current_video is None:
                     print("Video not found.")
                     
                     
-            elif choice == 4:                                   #URGENT BELOM TERISI
+            elif choice == 4:
                 if(queue.is_empty()):
                     print('Queue is still empty!!!')
                     continue
@@ -114,9 +123,13 @@ def main_menu():
                 title = input("Enter the title of the video to remove from the queue: ")
                 # Remove video from queue (implement your queue logic here)
                 queue.delete(title)
-
+                
             elif choice == 8:
-                print("\n -- Displaying all videos: --")
+                print("\n -- Displaying queue: --")
+                print(queue)
+
+            elif choice == 9:
+                print("\n -- Displaying all Video: --")
                 print(videos)
 
             elif choice == 0:

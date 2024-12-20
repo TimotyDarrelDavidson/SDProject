@@ -8,13 +8,15 @@ class Queue:
     self.queue.append(video)
     print(f"{video.title} added to queue")
     
-  def delete(self, title):
+  #Forced itu buat di line 
+  def delete(self, title, forced = False):
     for i, item in enumerate(self.queue):
       if item.title == title:  # Compare based on title
         del self.queue[i]
         print(f"Video '{title}' removed from the queue.")
         return
-    print(f"Video '{title}' not found in the queue.")
+    if(forced is False):
+      print(f"Video '{title}' not found in the queue.")
 
   def dequeue(self):
     if self.is_empty():
@@ -22,7 +24,6 @@ class Queue:
       return None
     video: Video = self.queue[0]
     self.queue = self.queue[1:]
-    print(f"{video.title} deleted from queue")
     return video
 
   def peek(self):
@@ -36,3 +37,10 @@ class Queue:
 
   def size(self):
     return len(self.queue)
+  
+  def __str__(self):
+    s = ''
+    for vid in self.queue:
+      s += vid.title + ' -> '
+      
+    return s + 'none'
