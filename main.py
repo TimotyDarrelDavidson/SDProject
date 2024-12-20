@@ -58,7 +58,7 @@ def main_menu():
                 recommendation.addVideo(video)
 
                 print("\nVideo added successfully!")
-                videos.printAllTree()
+                print(videos)
                 print(recommendation)
 
             elif choice == 2:
@@ -68,8 +68,7 @@ def main_menu():
                 recommendation.removeVideo(title)
 
                 print(f"\n{title} removed successfully!")
-                videos.printAllTree()
-                print(recommendation)
+                print(videos)
 
             elif choice == 3:
                 print("\nFungsi Play Video.")
