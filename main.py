@@ -39,9 +39,7 @@ def main_menu():
     recommendation.addVideo(video3)
     recommendation.addVideo(video4)
 
-    # Display all videos and recommendations
     print(videos)
-    print(recommendation)
 
     while True:
         try:
@@ -84,7 +82,11 @@ def main_menu():
                     
                     
             elif choice == 4:                                   #URGENT BELOM TERISI
-                pass
+                if(queue.is_empty()):
+                    print('Queue is still empty!!!')
+                    continue
+                
+                current_video = queue.dequeue()
 
 
             elif choice == 5:
@@ -99,15 +101,20 @@ def main_menu():
                 print("\nFungsi Add video ke Queue.")
                 title = input("Enter the title of the video to add to the queue: ")
                 # Add video to queue (implement your queue logic here)
+                video = videos.search(title)
+                if (video):
+                    queue.enqueue(video)
+                
 
             elif choice == 7:
                 print("\nFungsi Remove video dari Queue.")
                 title = input("Enter the title of the video to remove from the queue: ")
                 # Remove video from queue (implement your queue logic here)
+                queue.delete(title)
 
             elif choice == 8:
                 print("\nDisplaying all videos:")
-                videos.printAllTree()
+                print(videos)
 
             elif choice == 0:
                 print("Terima kasih sudah menggunakan StreamTree. Sampai jumpa!")

@@ -91,7 +91,7 @@ class BST:
         return None
       if current.video.title == title:
         return current.video
-      elif title < current.title:
+      elif title < current.video.title:
         return DFS(current.left, title)
       else:
         return DFS(current.right, title)
