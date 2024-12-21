@@ -1,7 +1,15 @@
+'''
+
+Yang Buat: Mary
+
+'''
+
+
 from BST import BST
 from Video import Video
 from Queue import Queue
 from Graph import Recommendation
+from QueueHistory import QueueHistory
 
 def main_menu():
     current_video = None  # Current video placeholder
@@ -9,24 +17,23 @@ def main_menu():
     videos = BST()
     recommendation = Recommendation()
     queue = Queue()
+    queueHistory = QueueHistory()
 
     # Sample video data
-    video1 = Video('Video1', ['tag1','tag2'], 'This is Video1', 60)
-    video2 = Video('Video2', ['tag1','tag2'], 'This is Video2', 60)
-    video3 = Video('Video3', ['tag2','tag3'], 'This is Video3', 60)
-    video4 = Video('Video4', ['tag3','tag4'], 'This is Video4', 60)
+    video1 = Video('Video1', ['tag1','tag2','tag3'], 'This is Video1', 60)
+    video2 = Video('Video2', ['tag2','tag3'], 'This is Video2', 60)
+    video3 = Video('Video3', ['tag1'], 'This is Video3', 60)
 
     # Insert sample videos into BST and Recommendation graph
     videos.insert(video1)
     videos.insert(video2)
     videos.insert(video3)
-    videos.insert(video4)
     recommendation.addVideo(video1)
     recommendation.addVideo(video2)
     recommendation.addVideo(video3)
-    recommendation.addVideo(video4)
 
     print(videos)
+    print(recommendation)
 
     while True:
         title = None
@@ -41,6 +48,8 @@ def main_menu():
         print("7. Remove video dari Queue")     #bisa remove video apapun dari queue
         print("8. Display Queue")               #diplay semua video dalam queue
         print("9. Display All Video")           #diplay semua video dalam videos(BST)
+        print("10. Display All history")  #diplay semua video dalam queueHistory
+        print("11. Clear history")  #diplay semua video dalam queueHistory
         print("0. Exit")
         print()
         if(current_video):
@@ -61,8 +70,8 @@ def main_menu():
 
                 video = videos.search(title)
                 if(video is None):
-                    videos.insert(video)
-                    recommendation.addVideo(video)
+                    videos.insert(new_video)
+                    recommendation.addVideo(new_video)
                     print("\nVideo added successfully!")
                 else:
                     print('\nVideo failed to add')
@@ -102,7 +111,9 @@ def main_menu():
                     print('Queue is still empty!!!')
                     continue
                 
-                current_video = queue.dequeue()
+                video = queue.dequeue()
+                queueHistory.addHistory(video)
+                current_video = video
 
 
             elif choice == 5:
@@ -137,6 +148,13 @@ def main_menu():
             elif choice == 9:
                 print("\n -- Displaying all Video: --")
                 print(videos)
+                
+            elif choice == 10:
+                print("\n -- Displaying queue History: --")
+                queueHistory.display()
+                
+            elif choice == 11:
+                queueHistory.clear()
 
             elif choice == 0:
                 print(" -- Terima kasih sudah menggunakan StreamTree. Sampai jumpa! -- ")

@@ -1,3 +1,11 @@
+'''
+
+Yang Buat insert,  printAllTree: Anto
+Yang Buat insert,  printAllTree: Anto
+
+'''
+
+
 from Video import Video  
 
 class BSTnode:
@@ -12,11 +20,13 @@ class BST:
 
   def insert(self, video: Video):
     def insertDFS(node: BSTnode, video: Video):
+      
       if video.title < node.video.title:
         if node.left:
           insertDFS(node.left, video)
         else:
           node.left = BSTnode(video)
+          
       elif video.title > node.video.title:
         if node.right:
           insertDFS(node.right, video)
@@ -27,6 +37,9 @@ class BST:
       self.root = BSTnode(video)
     else:
       insertDFS(self.root, video)
+      
+      
+      
 
   def printAllTree(self):
     def DFS(current: BSTnode):
@@ -96,6 +109,8 @@ class BST:
       else:
         return DFS(current.right, title)
     return DFS(self.root, title)
+
+
 
   def __str__(self):
       def DFS(current: BSTnode):

@@ -1,3 +1,12 @@
+'''
+
+Yang Buat addVideo, addEdge: Wilson
+Yang Buat removeVideo, removeEdge, getRecommendation, printAllEdges, __str__: Darrel
+
+
+'''
+
+
 from Video import Video
 
 class Recommend:
@@ -28,6 +37,7 @@ class Recommendation:
         
         def link_nodes(src: Recommend, dest: Recommend):
             if set(src.tags) & set(dest.tags):
+                
                 if src.right:
                     self.addEdge(src, dest)
                 else:
@@ -44,6 +54,10 @@ class Recommendation:
         
         link_nodes(node,temp)
         temp.left = node
+        
+        
+        
+        
         
     def removeVideo(self, video: Video):
         if self.head is None:
