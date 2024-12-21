@@ -39,7 +39,7 @@ def main_menu():
         print("5. Find recommended")            #From current_video display recommended
         print("6. Add video ke Queue")          #nambah video dalam queue
         print("7. Remove video dari Queue")     #bisa remove video apapun dari queue
-        print("8. Display Queue")           #diplay semua video dalam queue
+        print("8. Display Queue")               #diplay semua video dalam queue
         print("9. Display All Video")           #diplay semua video dalam videos(BST)
         print("0. Exit")
         print()
@@ -57,13 +57,16 @@ def main_menu():
                 description = input("Enter the description of the video: ")
                 duration = int(input("Enter the duration of the video (in minutes): "))
 
-                video = Video(title, tags, description, duration)
+                new_video = Video(title, tags, description, duration)
 
-                videos.insert(video)
-                recommendation.addVideo(video)
-
-                print("\nVideo added successfully!")
-                print(videos)
+                video = videos.search(title)
+                if(video is None):
+                    videos.insert(video)
+                    recommendation.addVideo(video)
+                    print("\nVideo added successfully!")
+                else:
+                    print('\nVideo failed to add')
+                videos.printAllTree()
                 print(recommendation)
 
             elif choice == 2:
@@ -71,9 +74,12 @@ def main_menu():
                 title = input("Enter the title of the video to remove: ")
                 video = videos.search(title)
                 if(video):    
+                    videos.printAllTree()
                     videos.removeVideo(title)
+                    print()
+                    videos.printAllTree()
                     recommendation.removeVideo(video)
-                    if(current_video.title == title):
+                    if(current_video is not None and current_video.title == title):
                         current_video = None
                     queue.delete(title,True)
                     
